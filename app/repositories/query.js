@@ -10,9 +10,8 @@ const execute = (query) => {
 			} else {
 				resolve(results)
 			}
-  
 		})
 	})
 }
 
-module.exports = execute
+module.exports = { execute }
