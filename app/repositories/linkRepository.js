@@ -20,9 +20,9 @@ const remove = (id) => {
 	return Query.execute(query)
 }
 
-const update = (newLink) => {
-	const { id, url } = newLink
-	const query = `UPDATE Clientes SET url='${url}' WHERE id=${id}`
+const update = (id, data) => {
+	const { url, name, position } = data
+	const query = `UPDATE links SET url='${url}', name='${name}', position='${position}' WHERE id=${id}`
 	return Query.execute(query)
 }
 

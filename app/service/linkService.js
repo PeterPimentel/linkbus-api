@@ -5,9 +5,29 @@ const index = async () => {
 	return LinkRepository.index()
 }
 
+const show = async (params) => {
+	console.log("[LinkService] Show")
+	const links = await LinkRepository.show(params.id)
+	if(Array.isArray(links) && links.length > 0){
+		return links[0]
+	}else{
+		return {message: "Link não encontrado"}
+	}
+}
+
 const store = async (data) => {
 	console.log("[LinkService] Store")
 	return LinkRepository.store(data)
 }
 
-module.exports = { index, store}
+const update = async (params, data) => {
+	console.log("[LinkService] Update")
+	return LinkRepository.update(params.id, data)
+}
+
+const remove = async (params) => {
+	console.log("[LinkService] Remove")
+	return LinkRepository.remove(params.id)
+}
+
+module.exports = { index, show, store, update, remove }
