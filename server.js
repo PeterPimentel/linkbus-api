@@ -2,7 +2,6 @@ require("dotenv").config()
 const express = require("express")
 const bodyParser = require("body-parser")
 const app = express();
-const routes = require("./app/routes")
 const connection = require("./app/config/db")
 
 connection.connect(erro => {
@@ -17,7 +16,7 @@ app.use(bodyParser.urlencoded({ extended: false }))
 // parse application/json
 app.use(bodyParser.json())
 // routes
-app.use("/", routes.link);
+require("./app/routes")(app)
 
 app.listen(3777, function () {
 	console.log("App is listening on port 3777!");
