@@ -1,12 +1,13 @@
 const express = require("express");
 const router = express.Router();
 
-const linkController = require("../controllers/linkController")
+const controller = require("../controllers/baseController")
+const linkService = require("../service/linkService")
 
-router.get("/", linkController.index)
-router.get("/:id", linkController.show)
-router.post("/", linkController.store)
-router.put("/:id", linkController.update)
-router.delete("/:id", linkController.remove)
+router.get("/", controller.index(linkService))
+router.get("/:id", controller.show(linkService))
+router.post("/", controller.store(linkService))
+router.put("/:id", controller.update(linkService))
+router.delete("/:id", controller.remove(linkService))
 
 module.exports = router
