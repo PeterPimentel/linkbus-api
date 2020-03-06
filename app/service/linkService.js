@@ -1,8 +1,8 @@
 const LinkRepository = require("../repositories/linkRepository")
 
-const index = async () => {
+const index = async (user) => {
 	console.log("[LinkService] Index")
-	return LinkRepository.index()
+	return LinkRepository.index(user)
 }
 
 const show = async (params) => {
@@ -16,8 +16,13 @@ const show = async (params) => {
 }
 
 const store = async (data) => {
-	console.log("[LinkService] Store")
-	return LinkRepository.store(data)
+	try {
+		console.log("[LinkService] Store")
+		const response = await LinkRepository.store(data)
+		return { id:response.insertId, ...data }
+	} catch (error) {
+		console.log("DEE",error)
+	}
 }
 
 const update = async (params, data) => {

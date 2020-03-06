@@ -1,4 +1,5 @@
 const UserRepository = require("../repositories/userRepository")
+const AuthService = require("./authService")
 
 const index = async () => {
 	console.log("[UserService] Index")
@@ -16,8 +17,17 @@ const show = async (params) => {
 }
 
 const store = async (data) => {
-	console.log("[UserService] Store")
-	return UserRepository.store(data)
+	try {
+		console.log("[UserService] Store")
+		const password = await AuthService.hash(data.password)
+		data.password = password
+
+		const response = await UserRepository.store(data)
+
+		return {id: response.insertId, ...data}
+	} catch (error) {
+		console.log("ERRROU",error)
+	}
 }
 
 const update = async (params, data) => {
@@ -30,4 +40,9 @@ const remove = async (params) => {
 	return UserRepository.remove(params.id)
 }
 
-module.exports = { index, show, store, update, remove }
+const findByName = async (name) => {
+	console.log("[UserService] FindByName")
+	return UserRepository.find("firstname",name)
+}
+
+module.exports = { index, show, store, update, remove, findByName }

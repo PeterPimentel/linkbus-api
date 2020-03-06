@@ -1,12 +1,12 @@
 const Query = require("./query")
 
 const index = () => {
-	const query = "SELECT firstname, lastname, email FROM users"
+	const query = "SELECT id, firstname, lastname, email FROM users"
 	return Query.execute(query)
 }
 
 const show = (id) => {
-	const query = `SELECT firstname, lastname, email FROM users WHERE id=${id}`
+	const query = `SELECT id, firstname, lastname, email FROM users WHERE id=${id}`
 	return Query.execute(query)
 }
 
@@ -28,4 +28,9 @@ const update = (id, data) => {
 	return Query.execute(query)
 }
 
-module.exports = { index, show, store, remove, update }
+const find = (field, value) => {
+	const query = `SELECT id, firstname, lastname, email from users WHERE ${field} LIKE '${value}'`
+	return Query.execute(query)
+}
+
+module.exports = { index, show, store, remove, update, find }
