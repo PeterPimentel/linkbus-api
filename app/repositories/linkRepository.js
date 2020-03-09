@@ -1,8 +1,7 @@
 const Query = require("./query")
 
 const index = (user) => {
-	console.log("SSSS", user.id)
-	const query = `SELECT * FROM links WHERE client_id = ${user.id}`
+	let query = `SELECT * FROM links WHERE client_id3 = ${user.id}`
 	return Query.execute(query)
 }
 

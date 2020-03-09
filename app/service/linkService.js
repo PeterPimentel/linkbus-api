@@ -1,8 +1,19 @@
 const LinkRepository = require("../repositories/linkRepository")
+const ErrorHandler = require("../utils/ErrorHandler")
+
+const ERROR_DATA = { service :"LinkService" }
 
 const index = async (user) => {
-	console.log("[LinkService] Index")
-	return LinkRepository.index(user)
+	try {
+		console.log("[LinkService] Index")
+		const links = await LinkRepository.index(user)
+		return links
+	} catch (error) {
+		throw ErrorHandler.log({
+			...ERROR_DATA,
+			message:"Erro ao buscar a lista de links"
+		},error)
+	}
 }
 
 const show = async (params) => {

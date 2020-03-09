@@ -5,7 +5,6 @@ const execute = (query) => {
 		console.log("Executing query...")
 		connection.query(query, (erro, results) => {
 			if (erro) {
-				console.log("Error during query execute...")
 				reject(erro)
 			} else {
 				resolve(results)

@@ -1,5 +1,5 @@
 const UserRepository = require("../repositories/userRepository")
-const AuthService = require("./authService")
+const cryptService = require("./cryptService")
 
 const index = async () => {
 	console.log("[UserService] Index")
@@ -19,7 +19,7 @@ const show = async (params) => {
 const store = async (data) => {
 	try {
 		console.log("[UserService] Store")
-		const password = await AuthService.hash(data.password)
+		const password = await cryptService.hash(data.password)
 		data.password = password
 
 		const response = await UserRepository.store(data)
@@ -41,8 +41,31 @@ const remove = async (params) => {
 }
 
 const findByName = async (name) => {
-	console.log("[UserService] FindByName")
-	return UserRepository.find("firstname",name)
+	try {
+		console.log("[UserService] FindByName")
+		const users = await UserRepository.find("username",name)
+		if(users && Array.isArray(users) && users.length > 0){
+			return users[0]
+		}else{
+			console.log("No users Match")
+		}
+	} catch (error) {
+		console.log("Erro na busca do usuário", error)
+	}
 }
 
-module.exports = { index, show, store, update, remove, findByName }
+const findRaw = async (usernameOrEmail) => {
+	try {
+		console.log("[UserService] findRawData")
+		const users = await UserRepository.findRaw(usernameOrEmail)
+		if(users && Array.isArray(users) && users.length > 0){
+			return users[0]
+		}else{
+			console.log("No users Match")
+		}
+	} catch (error) {
+		console.log("Erro na busca do usuário", error)
+	}
+}
+
+module.exports = { index, show, store, update, remove, findByName, findRaw }

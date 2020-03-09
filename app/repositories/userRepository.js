@@ -1,18 +1,18 @@
 const Query = require("./query")
 
 const index = () => {
-	const query = "SELECT id, firstname, lastname, email FROM users"
+	const query = "SELECT id, username, email FROM users"
 	return Query.execute(query)
 }
 
 const show = (id) => {
-	const query = `SELECT id, firstname, lastname, email FROM users WHERE id=${id}`
+	const query = `SELECT id, username, email FROM users WHERE id=${id}`
 	return Query.execute(query)
 }
 
 const store = (data) => {
-	const query = `INSERT INTO users(firstname, lastname, email, password)
-    VALUES('${data.firstname}', '${data.lastname}','${data.email}','${data.password}')`
+	const query = `INSERT INTO users(username, email, password)
+    VALUES('${data.username}','${data.email}','${data.password}')`
 
 	return Query.execute(query)
 }
@@ -23,14 +23,23 @@ const remove = (id) => {
 }
 
 const update = (id, data) => {
-	const { url, name } = data
-	const query = `UPDATE users SET url='${url}', name='${name}' WHERE id=${id}`
+	const { username, email } = data
+	const query = `UPDATE users SET username='${username}', email='${email}' WHERE id=${id}`
 	return Query.execute(query)
 }
 
 const find = (field, value) => {
-	const query = `SELECT id, firstname, lastname, email from users WHERE ${field} LIKE '${value}'`
+	const query = `SELECT id, username, email from users WHERE ${field} LIKE '${value}'`
 	return Query.execute(query)
 }
 
-module.exports = { index, show, store, remove, update, find }
+const findRaw = (usernameOrEmail) => {
+	const query = `
+	SELECT id, username, email, password
+	FROM users
+	WHERE username LIKE '${usernameOrEmail}' OR email LIKE'${usernameOrEmail}'`
+
+	return Query.execute(query)
+}
+
+module.exports = { index, show, store, remove, update, find, findRaw }

@@ -5,10 +5,10 @@ const app = express();
 const connection = require("./app/config/db")
 
 connection.connect(erro => {
-	if (erro) {
+	if (erro)
 		console.log(erro)
-	}
-	console.log("Connection with DB success")
+	else
+		console.log("Connection with DB success")
 })
 
 // parse application/x-www-form-urlencoded

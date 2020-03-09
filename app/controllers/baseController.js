@@ -1,10 +1,10 @@
 const index = (service) => async (req, res) => {
 	try {
 		console.info("[baseController] - index")
-		const response = await service.index()
+		const response = await service.index(req.auth)
 		res.send(response)
 	} catch (error) {
-		console.log("Error")
+		res.status(error.statusCode).send(error);
 	}
 }
 
@@ -14,8 +14,7 @@ const show = (service) => async (req, res) => {
 		const response = await service.show(req.params)
 		res.send(response)
 	} catch (error) {
-		console.log("Erro"),
-		res.send(error)
+		res.status(error.statusCode).send(error);
 	}
 }
 
@@ -25,8 +24,7 @@ const store = (service) => async (req, res) => {
 		const response = await service.store(req.body)
 		res.send(response)
 	} catch (error) {
-		console.log("Erro"),
-		res.send(error)
+		res.status(error.statusCode).send(error);
 	}
 }
 
@@ -35,8 +33,7 @@ const update = (service) => async (req, res) => {
 		const response = await service.update(req.params, req.body)
 		res.send(response)
 	} catch (error) {
-		console.log("Erro"),
-		res.send(error)
+		res.status(error.statusCode).send(error);
 	}
 }
 
@@ -45,8 +42,7 @@ const remove = (service) => async (req, res) => {
 		await service.remove(req.params)
 		res.send(true)
 	} catch (error) {
-		console.log("Erro"),
-		res.send(error)
+		res.status(error.statusCode).send(error);
 	}
 }
 
@@ -55,8 +51,7 @@ const custom = (method, service) => async (req, res) => {
 		const response = await service[method](req.params)
 		res.send(response)
 	} catch (error) {
-		console.log("Erro"),
-		res.send(error)
+		res.status(error.statusCode).send(error);
 	}
 }
 

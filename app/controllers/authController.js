@@ -1,13 +1,27 @@
-const AuthService = require("../service/authService")
+const authService = require("../service/authService")
 
 const login = async (req, res) => {
 	try {
-		const user = await AuthService.login(req.bdoy)
-		res.send(user)
+		const token = await authService.login(req.body)
+		res.send(token)
 	} catch (error) {
-		console.log("Erro"),
+		console.log("Erro")
 		res.send(error)
 	}
 }
 
-module.exports = { login }
+const check = async (req, res, next) => {
+	try {
+		const response = await authService.check(req.headers)
+		if(response.authorized){
+			req.auth = response.user
+			next()
+		}else{
+			throw {"a":"a"}
+		}
+	} catch (error) {
+		console.log("DEU Erro aqui", error)
+	}
+}
+
+module.exports = { login, check }
