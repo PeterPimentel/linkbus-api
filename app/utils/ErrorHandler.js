@@ -1,13 +1,20 @@
 
-const log = ({ message, status = 400}, error) => {
+const log = ({ message, status = 400}, error = {}) => {
 	console.log(`Error Handler - [Message] - ${message}`)
-	console.log(`Error Handler - [Trace] - ${error.message}`)
-    
+	
+	let originStackTrace = "No Trace provided"
+	let code = 0
+
+	if(error){
+		console.log(`Error Handler - [Trace] - ${error.message}`)
+		originStackTrace = error.message
+		code = error.code
+	}
+
 	let customMessage = message
-	let originStackTrace = error.message
     
 	if(error.formated){
-		customMessage = `${error.message} -> \n ${customMessage}`,
+		customMessage = error.message,
 		originStackTrace = error.stackTrace
 	}
     
@@ -17,12 +24,10 @@ const log = ({ message, status = 400}, error) => {
 	customError.statusCode = status
 	customError.formated = true
     
-	console.log(customError)
-    
 	if(process.env.PRODUCTION === "true"){
 		return customError
 	}else{
-		customError.code = error.code
+		customError.code = code
 		customError.stackTrace = originStackTrace
 		return customError
 	}

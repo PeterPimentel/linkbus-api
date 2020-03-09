@@ -11,7 +11,7 @@ const index = (service) => async (req, res) => {
 const show = (service) => async (req, res) => {
 	try {
 		console.info("[baseController] - show")
-		const response = await service.show(req.params)
+		const response = await service.show(req.auth, req.params)
 		res.send(response)
 	} catch (error) {
 		res.status(error.statusCode).send(error);
@@ -21,7 +21,7 @@ const show = (service) => async (req, res) => {
 const store = (service) => async (req, res) => {
 	try {
 		console.info("[baseController] - store")
-		const response = await service.store(req.body)
+		const response = await service.store(req.auth, req.body)
 		res.send(response)
 	} catch (error) {
 		res.status(error.statusCode).send(error);
@@ -30,7 +30,7 @@ const store = (service) => async (req, res) => {
 
 const update = (service) => async (req, res) => {
 	try {
-		const response = await service.update(req.params, req.body)
+		const response = await service.update(req.auth, req.params, req.body)
 		res.send(response)
 	} catch (error) {
 		res.status(error.statusCode).send(error);
@@ -39,7 +39,7 @@ const update = (service) => async (req, res) => {
 
 const remove = (service) => async (req, res) => {
 	try {
-		await service.remove(req.params)
+		await service.remove(req.auth, req.params)
 		res.send(true)
 	} catch (error) {
 		res.status(error.statusCode).send(error);

@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken")
 const userService = require("./userService")
 const cryptService = require("./cryptService")
+const ErrorHandler = require("../utils/ErrorHandler")
 const PRIVATE_KEY = process.env.JWT_PRIVATE_KEY
 
 const login = async (data) => {
@@ -12,14 +13,14 @@ const login = async (data) => {
 			if(token) {
 				return {authorized: true, token, user:{...user, password:undefined}}
 			}else{
-				throw {authorized : "User not found"}
+				throw ErrorHandler.log({message:"Ocorreu um erro inesperado"})
 			}
 		}else{
-			throw {authorized : "User not found"}
+			throw ErrorHandler.log({message:"Usuário ou senha inválido"})
 		}
 		
 	} catch (error) {
-		console.log("AuthService Erro -> ", error)
+		throw ErrorHandler.log({message:"Ocorreu um erro inesperado"},error)
 	}
 }
 
@@ -35,10 +36,10 @@ const check = async (headers) => {
 				}
 			}
 		}else{
-			throw {"errr0":"Mal formated"}
+			throw ErrorHandler.log({message:"Token inválido"})
 		}
 	} catch (error) {
-		throw {err:"DDD"}
+		throw ErrorHandler.log({message:"Ocorreu um erro inesperado"},error)
 	}
 }
 

@@ -5,8 +5,7 @@ const login = async (req, res) => {
 		const token = await authService.login(req.body)
 		res.send(token)
 	} catch (error) {
-		console.log("Erro")
-		res.send(error)
+		res.status(error.statusCode).send(error)
 	}
 }
 
@@ -17,10 +16,10 @@ const check = async (req, res, next) => {
 			req.auth = response.user
 			next()
 		}else{
-			throw {"a":"a"}
+			throw new Error("Usuário não autorizado")
 		}
 	} catch (error) {
-		console.log("DEU Erro aqui", error)
+		res.status(error.statusCode).send(error)
 	}
 }
 

@@ -1,5 +1,6 @@
 const UserRepository = require("../repositories/userRepository")
 const cryptService = require("./cryptService")
+const ErrorHandler = require("../utils/ErrorHandler")
 
 const index = async () => {
 	console.log("[UserService] Index")
@@ -44,13 +45,14 @@ const findByName = async (name) => {
 	try {
 		console.log("[UserService] FindByName")
 		const users = await UserRepository.find("username",name)
+
 		if(users && Array.isArray(users) && users.length > 0){
 			return users[0]
 		}else{
-			console.log("No users Match")
+			throw ErrorHandler.log({message:"Perfil não encontrado"})
 		}
 	} catch (error) {
-		console.log("Erro na busca do usuário", error)
+		throw ErrorHandler.log({message:"Erro ao buscar o perfil do usuário"})
 	}
 }
 

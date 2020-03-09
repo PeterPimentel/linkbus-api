@@ -6,9 +6,9 @@ const auth = require("../controllers/authController")
 const linkService = require("../service/linkService")
 
 router.get("/", auth.check, controller.index(linkService))
-router.get("/:id", controller.show(linkService))
-router.post("/", controller.store(linkService))
-router.put("/:id", controller.update(linkService))
-router.delete("/:id", controller.remove(linkService))
+router.get("/:id", auth.check, controller.show(linkService))
+router.post("/", auth.check, controller.store(linkService))
+router.put("/:id", auth.check, controller.update(linkService))
+router.delete("/:id", auth.check, controller.remove(linkService))
 
 module.exports = router
