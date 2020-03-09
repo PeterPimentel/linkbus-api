@@ -1,0 +1,10 @@
+{
+    "translation":{    
+        "createError":"Ocorreu um erro ao tentar criar o {{0}}. Aguarde alguns minutos e tente novamente.",
+        "listError":"Ocorreu um erro ao tentar listar os {{0}}. Aguarde alguns minutos e tente novamente.",
+        "showError":"Ocorreu um erro ao tentar buscar o {{0}}. Aguarde alguns minutos e tente novamente.",
+        "updateError":"Ocorreu um erro ao tentar atualizar as informações do {{0}}. Aguarde alguns minutos e tente novamente.",
+        "deleteError":"Ocorreu um erro ao tentar remover o {{0}}. Aguarde alguns minutos e tente novamente.",
+        "unexpectedError":"Ocorreu um erro inesperado."
+    }
+}

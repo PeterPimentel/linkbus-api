@@ -1,7 +1,7 @@
 const Query = require("./query")
 
 const index = (id) => {
-	let query = `SELECT * FROM links WHERE client_id = ${id}`
+	let query = `SELECT * FROM links WHERE user_id = ${id} ORDER BY position ASC`
 	return Query.execute(query)
 }
 
@@ -11,9 +11,9 @@ const show = (id) => {
 }
 
 const store = (link) => {
-	const { url, name, position, client_id } = link
-	const query = `INSERT INTO links(url, name, position, client_id ) 
-		VALUES('${url}','${name}','${position}','${client_id}')`
+	const { url, name, position, user_id } = link
+	const query = `INSERT INTO links(url, name, position, user_id ) 
+		VALUES('${url}','${name}','${position}','${user_id}')`
 	return Query.execute(query)
 }
 

@@ -12,12 +12,8 @@ const login = async (req, res) => {
 const check = async (req, res, next) => {
 	try {
 		const response = await authService.check(req.headers)
-		if(response.authorized){
-			req.auth = response.user
-			next()
-		}else{
-			throw new Error("Usuário não autorizado")
-		}
+		req.auth = response.user
+		next()
 	} catch (error) {
 		res.status(error.statusCode).send(error)
 	}

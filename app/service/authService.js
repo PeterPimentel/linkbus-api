@@ -34,6 +34,8 @@ const check = async (headers) => {
 					user:decoded,
 					authorized: true
 				}
+			}else{
+				throw ErrorHandler.log({message:"Token mal formatado"})	
 			}
 		}else{
 			throw ErrorHandler.log({message:"Token inválido"})
