@@ -5,6 +5,10 @@
         "showError":"Ocorreu um erro ao tentar buscar o {{0}}. Aguarde alguns minutos e tente novamente.",
         "updateError":"Ocorreu um erro ao tentar atualizar as informações do {{0}}. Aguarde alguns minutos e tente novamente.",
         "deleteError":"Ocorreu um erro ao tentar remover o {{0}}. Aguarde alguns minutos e tente novamente.",
-        "unexpectedError":"Ocorreu um erro inesperado."
+        "unexpectedError":"Ocorreu um erro inesperado.",
+        "resourceNotFound":"Recurso não encontrado.",
+        "notFound":"{{0}} não encontrado.",
+        "used":"Este {{0}} já está sendo utilizado.",
+        "invalidValue":"O valor utilizado para o {{0}} é inválido"
     }
 }

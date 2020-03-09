@@ -22,14 +22,16 @@ const remove = (id) => {
 	return Query.execute(query)
 }
 
-const update = (id, data) => {
-	const { username, email } = data
+const update = (id, user) => {
+	const { username, email } = user
 	const query = `UPDATE users SET username='${username}', email='${email}' WHERE id=${id}`
 	return Query.execute(query)
 }
 
-const find = (field, value) => {
-	const query = `SELECT id, username, email from users WHERE ${field} LIKE '${value}'`
+const find = (usernameOrEmail) => {
+	const query = `SELECT id, username, email
+	FROM users
+	WHERE username LIKE '${usernameOrEmail}' OR email LIKE'${usernameOrEmail}'`
 	return Query.execute(query)
 }
 
@@ -42,4 +44,10 @@ const findRaw = (usernameOrEmail) => {
 	return Query.execute(query)
 }
 
-module.exports = { index, show, store, remove, update, find, findRaw }
+const updatePassword = (id, password) => {
+	console.log(`User ${id} called to change its password.`)
+	const query = `UPDATE users SET password='${password}' WHERE id=${id}`
+	return Query.execute(query)
+}
+
+module.exports = { index, show, store, remove, update, find, findRaw, updatePassword }

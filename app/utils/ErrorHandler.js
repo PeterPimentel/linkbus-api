@@ -1,12 +1,12 @@
 
 const log = ({ message, status = 400}, error = {}) => {
-	console.log(`Error Handler - [Message] - ${message}`)
+	console.warn(`Error Handler - [Message] - ${message}`)
 	
 	let originStackTrace = "No Trace provided"
 	let code = 0
 
 	if(error){
-		console.log(`Error Handler - [Trace] - ${error.message}`)
+		console.warn(`Error Handler - [Trace] - ${error.message}`)
 		originStackTrace = error.message
 		code = error.code
 	}
