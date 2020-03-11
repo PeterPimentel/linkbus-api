@@ -2,6 +2,7 @@ const jwt = require("jsonwebtoken")
 const userService = require("./userService")
 const cryptService = require("./cryptService")
 const ErrorHandler = require("../utils/ErrorHandler")
+const {getMessage} = require("../utils/messages")
 const PRIVATE_KEY = process.env.JWT_PRIVATE_KEY
 
 const login = async (data) => {
@@ -9,18 +10,13 @@ const login = async (data) => {
 		const user = await userService.findRaw(data.username)
 		const match = cryptService.compare(data.password, user.password)
 		if(match){
-			const token = jwt.sign({...user, password:undefined }, PRIVATE_KEY, { algorithm: "HS256" });
-			if(token) {
-				return {authorized: true, token, user:{...user, password:undefined}}
-			}else{
-				throw ErrorHandler.log({message:"Ocorreu um erro inesperado"})
-			}
+			const token = jwt.sign({...user, password:undefined }, PRIVATE_KEY, { expiresIn:"3h", algorithm: "HS256" });
+			return {authorized: true, token, user:{...user, password:undefined}}
 		}else{
-			throw ErrorHandler.log({message:"Usuário ou senha inválido"})
+			throw ErrorHandler.log({message:getMessage("userOrPassInvalid")})
 		}
-		
 	} catch (error) {
-		throw ErrorHandler.log({message:"Ocorreu um erro inesperado"},error)
+		throw ErrorHandler.log({message:getMessage("unexpectedError")},error)
 	}
 }
 
@@ -35,13 +31,20 @@ const check = async (headers) => {
 					authorized: true
 				}
 			}else{
-				throw ErrorHandler.log({message:"Token mal formatado"})	
+				throw ErrorHandler.log({message:getMessage("malformedToken")})
 			}
 		}else{
-			throw ErrorHandler.log({message:"Token inválido"})
+			throw ErrorHandler.log({message:getMessage("noToken")})
 		}
 	} catch (error) {
-		throw ErrorHandler.log({message:"Ocorreu um erro inesperado"},error)
+		switch (error.name) {
+		case "TokenExpiredError":
+			throw ErrorHandler.log({message:getMessage("expiredToken")},error)
+		case "JsonWebTokenError":
+			throw ErrorHandler.log({message:getMessage("malformedToken")},error)
+		default:
+			throw ErrorHandler.log({message:getMessage("unexpectedError")},error)
+		}
 	}
 }
 

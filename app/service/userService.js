@@ -16,11 +16,7 @@ const _validateUser = async (user) => {
 		})
 	}
 
-	if(user.password && (
-		user.password === "" ||
-		user.password === undefined ||
-		user.password === " ")
-	){
+	if(!user.password || user.password === "" || user.password === undefined ) {
 		throw ErrorHandler.log({
 			message: getMessage("invalidValue","password")
 		})
@@ -83,14 +79,21 @@ const update = async (auth, params, user) => {
 
 	} catch (error) {
 		throw ErrorHandler.log({
-			message: getMessage("createError","usuário")
+			message: getMessage("updateError","usuário")
 		},error)
 	}
 }
 
-const remove = async (params) => {
-	console.log("[UserService] Remove")
-	return UserRepository.remove(params.id)
+const remove = async (auth, params) => {
+	try {
+		console.log("[UserService] Remove")
+		await UserRepository.remove(params.id)
+		return true
+	} catch (error) {
+		throw ErrorHandler.log({
+			message: getMessage("deleteError","usuário")
+		},error)
+	}
 }
 
 const findByName = async (name) => {
@@ -101,10 +104,14 @@ const findByName = async (name) => {
 		if(users && Array.isArray(users) && users.length > 0){
 			return users[0]
 		}else{
-			throw ErrorHandler.log({message:"Perfil não encontrado"})
+			throw ErrorHandler.log({
+				message:getMessage("notFound","Usuário")
+			})
 		}
 	} catch (error) {
-		throw ErrorHandler.log({message:"Erro ao buscar o perfil do usuário"})
+		throw ErrorHandler.log({
+			message:getMessage("unexpectedError")
+		},error)
 	}
 }
 
@@ -115,10 +122,14 @@ const findRaw = async (usernameOrEmail) => {
 		if(users && Array.isArray(users) && users.length > 0){
 			return users[0]
 		}else{
-			console.log("No users Match")
+			throw ErrorHandler.log({
+				message:getMessage("notFound","Usuário")
+			})
 		}
 	} catch (error) {
-		console.log("Erro na busca do usuário", error)
+		throw ErrorHandler.log({
+			message:getMessage("unexpectedError")
+		},error)
 	}
 }
 

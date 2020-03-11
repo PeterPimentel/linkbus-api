@@ -9,6 +9,10 @@
         "resourceNotFound":"Recurso não encontrado.",
         "notFound":"{{0}} não encontrado.",
         "used":"Este {{0}} já está sendo utilizado.",
-        "invalidValue":"O valor utilizado para o {{0}} é inválido"
+        "invalidValue":"O valor utilizado para o {{0}} é inválido",
+        "expiredToken": "Sua sessão expirou, por favor realize o login novamente.",
+        "malformedToken": "Token inválido.",
+        "noToken":"Token não fornecido.",
+        "userOrPassInvalid":"Usuário ou senha inválidos."
     }
 }
