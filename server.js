@@ -3,13 +3,17 @@ const express = require("express")
 const bodyParser = require("body-parser")
 const app = express();
 const connection = require("./app/config/db")
+const tables = require("./app/config/tables")
 const lang = require("./app/config/langProvider")
 
 connection.connect(erro => {
-	if (erro)
+	if (erro){
+		console.log("Erro de conexão")
 		console.log(erro)
-	else
+	}else{
+		tables.init()
 		console.log("Connection with DB success")
+	}
 })
 
 lang.init()
