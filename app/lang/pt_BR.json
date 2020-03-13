@@ -13,6 +13,7 @@
         "expiredToken": "Sua sessão expirou, por favor realize o login novamente.",
         "malformedToken": "Token inválido.",
         "noToken":"Token não fornecido.",
-        "userOrPassInvalid":"Usuário ou senha inválidos."
+        "userOrPassInvalid":"Usuário ou senha inválidos.",
+        "notAuthorized": "Usuário não autorizado para executar ação."
     }
 }

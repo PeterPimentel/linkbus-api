@@ -17,12 +17,16 @@ const index = async (user) => {
 }
 
 const show = async (user, params) => {
-	console.log("[LinkService] Show")
-	const links = await LinkRepository.show(params.id)
-	if(Array.isArray(links) && links.length > 0){
-		return links[0]
-	}else{
-		throw ErrorHandler.log({ message:getMessage("showError","link")}, error)
+	try {
+		console.log("[LinkService] Show")
+		const links = await LinkRepository.show(user, params.id)
+		if(Array.isArray(links) && links.length > 0){
+			return links[0]
+		}else{
+			throw ErrorHandler.log({ message:getMessage("showError","link")})
+		}
+	} catch (error) {
+		throw ErrorHandler.log({message:getMessage("notAuthorized")},error)
 	}
 }
 
@@ -45,13 +49,37 @@ const store = async (user, data) => {
 }
 
 const update = async (user, params, data) => {
-	console.log("[LinkService] Update")
-	return LinkRepository.update(params.id, data)
+	try {
+		console.log("[LinkService] Update")
+		const result = await LinkRepository.update(user, params.id, data)
+		if(result.affectedRows === 0){
+			throw ErrorHandler.log({ message:getMessage("notAuthorized")})
+		}else{
+			return {...data}
+		}
+	} catch (error) {
+		throw ErrorHandler.log({
+			message:getMessage("unexpectedError"),
+			status:500
+		},error)
+	}
 }
 
 const remove = async (user, params) => {
-	console.log("[LinkService] Remove")
-	return LinkRepository.remove(params.id)
+	try {
+		console.log("[LinkService] Remove")
+		const result = await LinkRepository.remove(user, params.id)
+		if(result.affectedRows === 0){
+			throw ErrorHandler.log({ message:getMessage("notAuthorized")})
+		}else{
+			return { response : true }
+		}
+	} catch (error) {
+		throw ErrorHandler.log({
+			message:getMessage("unexpectedError"),
+			status:500
+		},error)
+	}
 }
 
 module.exports = { index, show, store, update, remove }

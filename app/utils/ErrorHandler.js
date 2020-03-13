@@ -4,24 +4,26 @@ const log = ({ message, status = 400}, error = {}) => {
 	
 	let originStackTrace = "No Trace provided"
 	let code = 0
-
+	
 	if(error){
 		console.warn(`Error Handler - [Trace] - ${error.message}`)
 		originStackTrace = error.message
 		code = error.code
 	}
-
+	
 	let customMessage = message
+	let customStatus = status
     
 	if(error.formated){
-		customMessage = error.message,
+		customMessage = error.message
+		customStatus = error.statusCode
 		originStackTrace = error.stackTrace
 	}
     
 	const customError = new Error(customMessage)
     
 	customError.description = customMessage
-	customError.statusCode = status
+	customError.statusCode = customStatus
 	customError.formated = true
     
 	if(process.env.PRODUCTION === "true"){

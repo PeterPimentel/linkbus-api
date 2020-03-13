@@ -5,8 +5,8 @@ const index = (id) => {
 	return Query.execute(query)
 }
 
-const show = (id) => {
-	const query = `SELECT * FROM links WHERE id=${id}`
+const show = (user, id) => {
+	const query = `SELECT * FROM links WHERE id=${id} AND user_id=${user.id}`
 	return Query.execute(query)
 }
 
@@ -17,14 +17,17 @@ const store = (link) => {
 	return Query.execute(query)
 }
 
-const remove = (id) => {
-	const query = `DELETE FROM links WHERE id=${id}`
+const remove = (user, id) => {
+	const query = `DELETE FROM links WHERE id=${id} AND user_id=${user.id}`
 	return Query.execute(query)
 }
 
-const update = (id, data) => {
+const update = (user, id, data) => {
 	const { url, name, position } = data
-	const query = `UPDATE links SET url='${url}', name='${name}', position='${position}' WHERE id=${id}`
+	const query = `UPDATE links SET 
+		url='${url}', name='${name}', position='${position}' 
+		WHERE id=${id} AND user_id=${user.id}`
+
 	return Query.execute(query)
 }
 

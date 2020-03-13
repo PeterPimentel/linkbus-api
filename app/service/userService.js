@@ -110,7 +110,8 @@ const findByName = async (name) => {
 		}
 	} catch (error) {
 		throw ErrorHandler.log({
-			message:getMessage("unexpectedError")
+			message:getMessage("unexpectedError"),
+			status:500
 		},error)
 	}
 }
@@ -128,7 +129,8 @@ const findRaw = async (usernameOrEmail) => {
 		}
 	} catch (error) {
 		throw ErrorHandler.log({
-			message:getMessage("unexpectedError")
+			message:getMessage("unexpectedError"),
+			status:500
 		},error)
 	}
 }
