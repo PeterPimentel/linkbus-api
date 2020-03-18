@@ -5,10 +5,8 @@ const SALT_ROUNDS = 10
 
 const hash = async (password) => {
 	try {
-		console.log("AQUI",password)
 		return await bcrypt.hash(password, SALT_ROUNDS)
 	} catch (error) {
-		console.log("AQUI",error)
 		throw ErrorHandler.log({
 			message:getMessage("unexpectedError"),
 			status:500

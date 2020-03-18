@@ -2,10 +2,10 @@ const profileRepository = require("../repositories/profileRepository")
 const ErrorHandler = require("../utils/ErrorHandler")
 const {getMessage} = require("../utils/messages")
 
-const index = async (auth) => {
+const index = async (user) => {
 	try {
 		console.log("[ProfileService] Index")
-		const profile = await profileRepository.index(auth.id)
+		const profile = await profileRepository.index(user.id)
 
 		if(Array.isArray(profile) && profile.length > 0){
 			return profile[0]
@@ -18,7 +18,7 @@ const index = async (auth) => {
 	}
 }
 
-const store = async (auth, data) => {
+const store = async (user, data) => {
 	try {
 		console.log("[ProfileService] Store")
 
@@ -32,14 +32,17 @@ const store = async (auth, data) => {
 	}
 }
 
-const update = async (auth, params, profile) => {
+const update = async (user, params, profile) => {
 	try {
 		console.log("[ProfileService] Update")
 
-		await profileRepository.update(params.id, profile)
+		const result = await profileRepository.update(user, params.id, profile)
 
-		return profile
-
+		if(result.affectedRows === 0){
+			throw ErrorHandler.log({ message:getMessage("notAuthorized")})
+		}else{
+			return { ...profile }
+		}
 	} catch (error) {
 		throw ErrorHandler.log({
 			message: getMessage("updateError","profile")
@@ -47,11 +50,15 @@ const update = async (auth, params, profile) => {
 	}
 }
 
-const remove = async (auth, params) => {
+const remove = async (user, params) => {
 	try {
 		console.log("[ProfileService] Remove")
-		await profileRepository.remove(params.id)
-		return true
+		const result = await profileRepository.remove(user, params.id)
+		if(result.affectedRows === 0){
+			throw ErrorHandler.log({ message:getMessage("notAuthorized")})
+		}else{
+			return { response : true }
+		}
 	} catch (error) {
 		throw ErrorHandler.log({
 			message: getMessage("deleteError","profile")

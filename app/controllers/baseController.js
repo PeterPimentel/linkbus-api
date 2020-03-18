@@ -30,6 +30,7 @@ const store = (service) => async (req, res) => {
 
 const update = (service) => async (req, res) => {
 	try {
+		console.info("[baseController] - update")
 		const response = await service.update(req.auth, req.params, req.body)
 		res.send(response)
 	} catch (error) {
@@ -39,6 +40,7 @@ const update = (service) => async (req, res) => {
 
 const remove = (service) => async (req, res) => {
 	try {
+		console.info("[baseController] - remove")
 		await service.remove(req.auth, req.params)
 		res.send(true)
 	} catch (error) {
@@ -48,6 +50,7 @@ const remove = (service) => async (req, res) => {
 
 const custom = (method, service) => async (req, res) => {
 	try {
+		console.info("[baseController] - custom")
 		const response = await service[method](req.params)
 		res.send(response)
 	} catch (error) {

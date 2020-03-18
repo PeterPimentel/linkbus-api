@@ -14,15 +14,16 @@ const store = (data) => {
 	return Query.execute(query)
 }
 
-const remove = (id) => {
-	const query = `DELETE FROM profiles WHERE id=${id}`
+const remove = (user, id) => {
+	const query = `DELETE FROM profiles WHERE id=${id} AND user_id=${user.id}`
 	return Query.execute(query)
 }
 
-const update = (id, profile) => {
+const update = (user, id, profile) => {
 	const {avatar, color} = profile
 
-	const query = `UPDATE users SET avatar='${avatar}', color='${color}' WHERE id=${id}`
+	const query = `UPDATE profiles SET avatar='${avatar}', color='${color}' WHERE id=${id} AND user_id=${user.id}`
+
 	return Query.execute(query)
 }
 
