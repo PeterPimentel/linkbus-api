@@ -84,7 +84,7 @@ const update = async (auth, params, user) => {
 	}
 }
 
-const remove = async (auth, params) => {
+const remove = async (params) => {
 	try {
 		console.log("[UserService] Remove")
 		await UserRepository.remove(params.id)

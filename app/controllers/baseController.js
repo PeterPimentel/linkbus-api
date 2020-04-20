@@ -43,7 +43,7 @@ const update = (service) => async (req, res) => {
 const remove = (service) => async (req, res) => {
 	try {
 		Log.trace("remove", "baseController")
-		await service.remove(req.auth, req.params)
+		await service(req.params, req.auth)
 		res.send(true)
 	} catch (error) {
 		res.status(error.statusCode).send(error);

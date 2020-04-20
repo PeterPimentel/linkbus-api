@@ -52,7 +52,7 @@ const update = async (user, params, profile) => {
 	}
 }
 
-const remove = async (user, params) => {
+const remove = async (params, user) => {
 	try {
 		Log.trace("Remove", "ProfileService")
 		const result = await profileRepository.remove(user, params.id)

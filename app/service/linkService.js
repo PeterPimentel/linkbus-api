@@ -67,7 +67,7 @@ const update = async (user, params, data) => {
 	}
 }
 
-const remove = async (user, params) => {
+const remove = async (params, user) => {
 	try {
 		Log.trace("Remove","LinkService")
 		const result = await LinkRepository.remove(user, params.id)

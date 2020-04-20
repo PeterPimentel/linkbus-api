@@ -5,7 +5,7 @@ const ErrorHandler = require("../utils/ErrorHandler")
 const {getMessage} = require("../utils/messages")
 const PRIVATE_KEY = process.env.JWT_PRIVATE_KEY
 
-const login = async (data) => {
+const login = async (_, data) => {
 	try {
 		const user = await userService.findRaw(data.username)
 		const match = cryptService.compare(data.password, user.password)

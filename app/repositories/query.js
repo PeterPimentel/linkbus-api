@@ -1,13 +1,14 @@
 const connection = require("../config/db")
+const Log = require("../utils/Log")
 
 const execute = (query) => {
 	return new Promise((resolve, reject)=> {
-		console.log("[Query] - Executing query...")
+		Log.trace("Query - Execute", "repositories/query")
 		connection.query(query, (erro, results) => {
 			if (erro) {
 				reject(erro)
 			} else {
-				console.log("[Query] - SUCCESS")
+				Log.trace("success", "repositories/query")
 				resolve(results)
 			}
 		})
