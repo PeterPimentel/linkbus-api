@@ -1,6 +1,7 @@
 require("dotenv").config()
 const express = require("express")
 const bodyParser = require("body-parser")
+const cors = require("cors");
 const app = express();
 const connection = require("./app/config/db")
 const tables = require("./app/config/tables")
@@ -17,6 +18,7 @@ connection.connect(erro => {
 })
 
 lang.init()
+app.use(cors())
 // parse application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: false }))
 // parse application/json

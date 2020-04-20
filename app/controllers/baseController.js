@@ -1,6 +1,8 @@
+const Log = require("../utils/Log")
+
 const index = (service) => async (req, res) => {
 	try {
-		console.info("[baseController] - index")
+		Log.trace("index", "baseController")
 		const response = await service.index(req.auth)
 		res.send(response)
 	} catch (error) {
@@ -10,8 +12,8 @@ const index = (service) => async (req, res) => {
 
 const show = (service) => async (req, res) => {
 	try {
-		console.info("[baseController] - show")
-		const response = await service.show(req.auth, req.params)
+		Log.trace("show", "baseController")
+		const response = await service(req.params, req.auth)
 		res.send(response)
 	} catch (error) {
 		res.status(error.statusCode).send(error);
@@ -20,7 +22,7 @@ const show = (service) => async (req, res) => {
 
 const store = (service) => async (req, res) => {
 	try {
-		console.info("[baseController] - store")
+		Log.trace("store", "baseController")
 		const response = await service.store(req.auth, req.body)
 		res.send(response)
 	} catch (error) {
@@ -30,7 +32,7 @@ const store = (service) => async (req, res) => {
 
 const update = (service) => async (req, res) => {
 	try {
-		console.info("[baseController] - update")
+		Log.trace("update", "baseController")
 		const response = await service.update(req.auth, req.params, req.body)
 		res.send(response)
 	} catch (error) {
@@ -40,7 +42,7 @@ const update = (service) => async (req, res) => {
 
 const remove = (service) => async (req, res) => {
 	try {
-		console.info("[baseController] - remove")
+		Log.trace("remove", "baseController")
 		await service.remove(req.auth, req.params)
 		res.send(true)
 	} catch (error) {
@@ -48,10 +50,11 @@ const remove = (service) => async (req, res) => {
 	}
 }
 
-const custom = (method, service) => async (req, res) => {
+//Custom method pass through the service all possibles datas
+const custom = (service) => async (req, res) => {
 	try {
-		console.info("[baseController] - custom")
-		const response = await service[method](req.params)
+		Log.trace("custom", "baseController")
+		const response = await service(req.params, req.body, req.query)
 		res.send(response)
 	} catch (error) {
 		res.status(error.statusCode).send(error);

@@ -1,12 +1,13 @@
+const Log = require("./Log")
 
 const log = ({ message, status = 400}, error = {}) => {
-	console.warn(`Error Handler - [Message] - ${message}`)
-	
+	Log.error(message, "Error Handler")
+
 	let originStackTrace = "No Trace provided"
 	let code = 0
 	
 	if(error){
-		console.warn(`Error Handler - [Trace] - ${error.message}`)
+		Log.error(error.message, "Error Handler - Trace")
 		originStackTrace = error.message
 		code = error.code
 	}

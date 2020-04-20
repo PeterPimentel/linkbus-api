@@ -4,9 +4,11 @@ const profileService = require("./profileService")
 const ErrorHandler = require("../utils/ErrorHandler")
 const {getMessage} = require("../utils/messages")
 
+const Log = require("../utils/Log")
+
 const show = async (params) => {
 	try {
-		console.log("[VCardService] Show")
+		Log.trace("show", "VCardService")
 		const user = await userService.findByName(params.name)
 		const linkPromise = await linkService.index(user)
 		const profilePromise = await profileService.index(user)

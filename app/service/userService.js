@@ -35,7 +35,7 @@ const index = async () => {
 	}
 }
 
-const show = async (auth, params) => {
+const show = async (params) => {
 	try {
 		console.log("[UserService] Show")
 		const users = await UserRepository.show(params.id)

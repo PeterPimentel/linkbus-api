@@ -2,9 +2,11 @@ const LinkRepository = require("../repositories/linkRepository")
 const ErrorHandler = require("../utils/ErrorHandler")
 const {getMessage} = require("../utils/messages")
 
+const Log = require("../utils/Log")
+
 const index = async (user) => {
 	try {
-		console.log("[LinkService] Index")
+		Log.trace("Index","LinkService")
 		if(user.id){
 			const links = await LinkRepository.index(user.id)
 			return links
@@ -16,9 +18,9 @@ const index = async (user) => {
 	}
 }
 
-const show = async (user, params) => {
+const show = async (params, user) => {
 	try {
-		console.log("[LinkService] Show")
+		Log.trace("Show","LinkService")
 		const links = await LinkRepository.show(user, params.id)
 		if(Array.isArray(links) && links.length > 0){
 			return links[0]
@@ -32,7 +34,7 @@ const show = async (user, params) => {
 
 const store = async (user, data) => {
 	try {
-		console.log("[LinkService] Store")
+		Log.trace("Store","LinkService")
 
 		const link = { ...data, user_id:user.id }
 
@@ -50,7 +52,7 @@ const store = async (user, data) => {
 
 const update = async (user, params, data) => {
 	try {
-		console.log("[LinkService] Update")
+		Log.trace("Update","LinkService")
 		const result = await LinkRepository.update(user, params.id, data)
 		if(result.affectedRows === 0){
 			throw ErrorHandler.log({ message:getMessage("notAuthorized")})
@@ -67,7 +69,7 @@ const update = async (user, params, data) => {
 
 const remove = async (user, params) => {
 	try {
-		console.log("[LinkService] Remove")
+		Log.trace("Remove","LinkService")
 		const result = await LinkRepository.remove(user, params.id)
 		if(result.affectedRows === 0){
 			throw ErrorHandler.log({ message:getMessage("notAuthorized")})
