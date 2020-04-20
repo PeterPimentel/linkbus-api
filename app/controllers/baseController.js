@@ -3,7 +3,7 @@ const Log = require("../utils/Log")
 const index = (service) => async (req, res) => {
 	try {
 		Log.trace("index", "baseController")
-		const response = await service.index(req.auth)
+		const response = await service(req.query, req.auth)
 		res.send(response)
 	} catch (error) {
 		res.status(error.statusCode).send(error);

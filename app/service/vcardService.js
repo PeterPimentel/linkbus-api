@@ -10,8 +10,8 @@ const show = async (params) => {
 	try {
 		Log.trace("show", "VCardService")
 		const user = await userService.findByName(params.name)
-		const linkPromise = await linkService.index(user)
-		const profilePromise = await profileService.index(user)
+		const linkPromise = await linkService.index({},user)
+		const profilePromise = await profileService.index({},user)
 
 		const result = await Promise.all([linkPromise, profilePromise])
 		return {

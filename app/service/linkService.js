@@ -4,14 +4,14 @@ const {getMessage} = require("../utils/messages")
 
 const Log = require("../utils/Log")
 
-const index = async (user) => {
+const index = async (query, user) => {
 	try {
 		Log.trace("Index","LinkService")
 		if(user.id){
 			const links = await LinkRepository.index(user.id)
 			return links
 		}else{
-			throw ErrorHandler.log({ message:getMessage("listError","link")}, error)	
+			throw ErrorHandler.log({ message:getMessage("listError","link")})	
 		}
 	} catch (error) {
 		throw ErrorHandler.log({ message:getMessage("listError","link")}, error)	
