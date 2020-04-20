@@ -20,11 +20,12 @@ const index = async (query, user) => {
 	}
 }
 
-const store = async (user, data) => {
+const store = async (data, user) => {
 	try {
 		Log.trace("Store", "ProfileService")
+		const profile = { ...data, user_id:user.id }
 
-		const response = await profileRepository.store(data)
+		const response = await profileRepository.store(profile)
 
 		return {id: response.insertId, ...data}
 	} catch (error) {

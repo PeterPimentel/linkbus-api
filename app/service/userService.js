@@ -2,9 +2,10 @@ const UserRepository = require("../repositories/userRepository")
 const cryptService = require("./cryptService")
 const ErrorHandler = require("../utils/ErrorHandler")
 const {getMessage} = require("../utils/messages")
+const Log = require("../utils/Log")
 
 const _validateUser = async (user) => {
-	console.log("[UserService] ValidateUser")
+	Log.trace("ValidateUser", "userService")
 
 	let _storedEmail = await UserRepository.find(user.email)
 	let _storedUsername = await UserRepository.find(user.username)
@@ -27,7 +28,7 @@ const _validateUser = async (user) => {
 
 const index = async () => {
 	try {
-		console.log("[UserService] Index")
+		Log.trace("Index", "userService")
 		const users = await UserRepository.index() 
 		return users
 	} catch (error) {
@@ -37,7 +38,7 @@ const index = async () => {
 
 const show = async (params) => {
 	try {
-		console.log("[UserService] Show")
+		Log.trace("Show", "userService")
 		const users = await UserRepository.show(params.id)
 		if(Array.isArray(users) && users.length > 0){
 			return users[0]
@@ -49,9 +50,9 @@ const show = async (params) => {
 	}
 }
 
-const store = async (auth, data) => {
+const store = async (data) => {
 	try {
-		console.log("[UserService] Store")
+		Log.trace("Store", "userService")
 		await _validateUser(data)
 
 		const password = await cryptService.hash(data.password)
@@ -69,7 +70,7 @@ const store = async (auth, data) => {
 
 const update = async (auth, params, user) => {
 	try {
-		console.log("[UserService] Update")
+		Log.trace("Update", "userService")
 
 		await _validateUser(user)
 
@@ -86,7 +87,7 @@ const update = async (auth, params, user) => {
 
 const remove = async (params) => {
 	try {
-		console.log("[UserService] Remove")
+		Log.trace("Remove")
 		await UserRepository.remove(params.id)
 		return true
 	} catch (error) {
@@ -98,7 +99,7 @@ const remove = async (params) => {
 
 const findByName = async (name) => {
 	try {
-		console.log("[UserService] FindByName")
+		Log.trace("FindByName")
 		const users = await UserRepository.find(name)
 
 		if(users && Array.isArray(users) && users.length > 0){
@@ -118,7 +119,7 @@ const findByName = async (name) => {
 
 const findRaw = async (usernameOrEmail) => {
 	try {
-		console.log("[UserService] findRawData")
+		Log.trace("findRawData")
 		const users = await UserRepository.findRaw(usernameOrEmail)
 		if(users && Array.isArray(users) && users.length > 0){
 			return users[0]

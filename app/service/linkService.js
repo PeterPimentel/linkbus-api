@@ -32,7 +32,7 @@ const show = async (params, user) => {
 	}
 }
 
-const store = async (user, data) => {
+const store = async (data, user) => {
 	try {
 		Log.trace("Store","LinkService")
 

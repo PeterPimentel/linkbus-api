@@ -23,7 +23,7 @@ const show = (service) => async (req, res) => {
 const store = (service) => async (req, res) => {
 	try {
 		Log.trace("store", "baseController")
-		const response = await service.store(req.auth, req.body)
+		const response = await service(req.body, req.auth)
 		res.send(response)
 	} catch (error) {
 		res.status(error.statusCode).send(error);
