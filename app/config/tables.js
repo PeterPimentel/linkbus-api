@@ -23,6 +23,7 @@ const createLinks = () => {
         name VARCHAR(150),
         url VARCHAR(255),
         user_id INT,
+        active BOOLEAN,
         PRIMARY KEY (id),
         FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
     );`
@@ -34,7 +35,8 @@ const createProfiles = () => {
 	const query = `CREATE TABLE IF NOT EXISTS profiles (
         id INT NOT NULL AUTO_INCREMENT,
         avatar VARCHAR(255),
-        color VARCHAR(30),
+        primary_color VARCHAR(70),
+        secondary_color	VARCHAR(70)
         user_id INT,
         PRIMARY KEY (id),
         FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
