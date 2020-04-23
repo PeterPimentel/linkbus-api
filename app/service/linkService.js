@@ -8,7 +8,7 @@ const index = async (query, user) => {
 	try {
 		Log.trace("Index","LinkService")
 		if(user.id){
-			const links = await LinkRepository.index(user.id)
+			const links = await LinkRepository.index(user.id, query)
 			return links
 		}else{
 			throw ErrorHandler.log({ message:getMessage("listError","link")})	
