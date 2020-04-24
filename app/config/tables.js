@@ -36,7 +36,7 @@ const createProfiles = () => {
         id INT NOT NULL AUTO_INCREMENT,
         avatar VARCHAR(255),
         primary_color VARCHAR(70),
-        secondary_color	VARCHAR(70)
+        secondary_color	VARCHAR(70),
         user_id INT,
         PRIMARY KEY (id),
         FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
