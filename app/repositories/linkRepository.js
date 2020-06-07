@@ -29,7 +29,7 @@ const remove = (user, id) => {
 
 const update = (user, id, data) => {
 	const { url, name, position, active } = data
-	console.log("Active ", active)
+
 	const query = `UPDATE links SET 
 		url='${url}', name='${name}', position='${position}', active='${active}'
 		WHERE id=${id} AND user_id=${user.id}`

@@ -33,7 +33,7 @@ const store = (service) => async (req, res) => {
 const update = (service) => async (req, res) => {
 	try {
 		Log.trace("update", "baseController")
-		const response = await service.update(req.auth, req.params, req.body)
+		const response = await service(req.params, req.body, req.auth)
 		res.send(response)
 	} catch (error) {
 		res.status(error.statusCode).send(error);

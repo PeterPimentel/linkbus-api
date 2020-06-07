@@ -35,7 +35,7 @@ const store = async (data, user) => {
 	}
 }
 
-const update = async (user, params, profile) => {
+const update = async (params, profile, user) => {
 	try {
 		Log.trace("Update", "ProfileService")
 

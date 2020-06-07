@@ -4,6 +4,19 @@ const {getMessage} = require("../utils/messages")
 
 const Log = require("../utils/Log")
 
+const _validateLink = (link) => {
+	Log.trace("_validateLink","LinkService")
+	if(!link.position){
+		throw ErrorHandler.log({ message:getMessage("invalidValue","position")})
+	}
+	if(!link.name){
+		throw ErrorHandler.log({ message:getMessage("invalidValue","name")})
+	}
+	if(!link.url){
+		throw ErrorHandler.log({ message:getMessage("invalidValue","url")})
+	}
+}
+
 const index = async (query, user) => {
 	try {
 		Log.trace("Index","LinkService")
@@ -50,9 +63,11 @@ const store = async (data, user) => {
 	}
 }
 
-const update = async (user, params, data) => {
+const update = async (params, data, user) => {
 	try {
 		Log.trace("Update","LinkService")
+		console.log("dados recebidos - ", data)
+		_validateLink(data)
 		const result = await LinkRepository.update(user, params.id, data)
 		if(result.affectedRows === 0){
 			throw ErrorHandler.log({ message:getMessage("notAuthorized")})

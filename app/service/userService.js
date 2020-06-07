@@ -4,6 +4,7 @@ const ErrorHandler = require("../utils/ErrorHandler")
 const {getMessage} = require("../utils/messages")
 const Log = require("../utils/Log")
 
+//TODO - melhorar a função de validação
 const _validateUser = async (user) => {
 	Log.trace("ValidateUser", "userService")
 
@@ -68,7 +69,7 @@ const store = async (data) => {
 	}
 }
 
-const update = async (auth, params, user) => {
+const update = async (params, user) => {
 	try {
 		Log.trace("Update", "userService")
 
