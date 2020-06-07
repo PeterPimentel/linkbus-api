@@ -4,7 +4,7 @@ const Log = require("../utils/Log")
 const check = async (req, res, next) => {
 	try {
 		Log.trace("check", "authMiddleware")
-		const response = await authService.check(req.headers)
+		const response = await authService.check(req.cookies)
 		req.auth = response.user
 		next()
 	} catch (error) {

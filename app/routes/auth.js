@@ -3,6 +3,6 @@ const controller = require("../controllers/baseController")
 const authService = require("../service/authService")
 const router = Router()
 
-router.post("/",controller.custom(authService.login))
+router.post("/",controller.auth(authService.login))
 
 module.exports = router

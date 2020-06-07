@@ -1,10 +1,13 @@
 const Log = require("../utils/Log")
 
+const PRODUCTION = `${process.env.PRODUCTION}` === "false" ? false : true
+
 const index = (service) => async (req, res) => {
 	try {
 		Log.trace("index", "baseController")
 		const response = await service(req.query, req.auth)
-		res.send(response)
+
+		return res.send(response)
 	} catch (error) {
 		res.status(error.statusCode).send(error);
 	}
@@ -61,4 +64,20 @@ const custom = (service) => async (req, res) => {
 	}
 }
 
-module.exports = { index, show, store, update, remove, custom }
+const auth = (service) => async (req, res) => {
+	try {
+		Log.trace("Auth", "baseController")
+		const response = await service(req.body)
+
+		//3h expiration time
+		res.cookie("token", response.token, {
+			expires: new Date(Date.now() + 10800000),
+			secure: PRODUCTION, // set to true if your using https
+			httpOnly: PRODUCTION,
+		}).send(response.data)
+	} catch (error) {
+		res.status(error.statusCode).send(error);
+	}
+}
+
+module.exports = { index, show, store, update, remove, custom, auth }
