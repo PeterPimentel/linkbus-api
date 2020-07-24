@@ -73,7 +73,7 @@ const auth = (service) => async (req, res) => {
 		res.cookie("token", response.token, {
 			expires: new Date(Date.now() + 10800000),
 			secure: PRODUCTION, // set to true if your using https
-			httpOnly: PRODUCTION,
+			httpOnly: true,
 		}).send(response.data)
 	} catch (error) {
 		res.status(error.statusCode).send(error);
