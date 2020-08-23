@@ -10,7 +10,7 @@ const lang = require("./app/config/langProvider");
 
 connection.connect((erro) => {
 	if (erro) {
-		console.log("Erro de conexão");
+		console.log("Connection Error");
 		console.log(erro);
 	} else {
 		tables.init();
@@ -21,7 +21,7 @@ connection.connect((erro) => {
 lang.init();
 app.use(
 	cors({
-		origin: [`${process.env.FRONT_URL}`,"http://localhost:3000",],
+		origin: [`${process.env.FRONT_URL}`, "http://localhost:3000"],
 		credentials: true,
 	})
 );

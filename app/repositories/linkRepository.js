@@ -18,13 +18,6 @@ const show = (user, id) => {
 	return Query.execute(query);
 };
 
-const store = (link) => {
-	const { url, name, position, active, user_id } = link;
-	const query = `INSERT INTO links(url, name, position, active, user_id )
-		VALUES('${url}','${name}','${position}','${active}','${user_id}')`;
-	return Query.execute(query);
-};
-
 const remove = (user, id) => {
 	const query = `DELETE FROM links WHERE id=${id} AND user_id=${user.id}`;
 	return Query.execute(query);
@@ -46,6 +39,28 @@ const bulkUpdate = (user, links) => {
 		url='${link.url}', name='${link.name}', position='${link.position}', active='${link.active}'
 		WHERE id=${link.id} AND user_id=${user.id}`
 	);
+
+	return Query.transaction(querys);
+};
+
+const store = (newLink, links) => {
+	const querys = [];
+	const { url, name, position, active, user_id } = newLink;
+
+	const insertQuery = `INSERT INTO links(url, name, position, active, user_id )
+		VALUES('${url}','${name}','${position}','${active}','${user_id}')`;
+
+	querys.push(insertQuery);
+
+	if (links && links.length > 0) {
+		const updatedQuery = links.map(
+			(link) => `UPDATE links SET
+		url='${link.url}', name='${link.name}', position='${link.position}', active='${link.active}'
+		WHERE id=${link.id} AND user_id=${user_id}`
+		);
+
+		querys.push(...updatedQuery);
+	}
 
 	return Query.transaction(querys);
 };

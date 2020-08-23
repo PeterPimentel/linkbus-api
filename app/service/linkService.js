@@ -21,12 +21,10 @@ const _reOrderLinks = async (user) => {
 	Log.trace("Re-Order", "LinkService");
 	const links = await LinkRepository.index(user.id, {});
 
-	const updatedLinks = links.map((link) => ({
+	return links.map((link) => ({
 		...link,
 		position: link.position + 1,
 	}));
-
-	return LinkRepository.bulkUpdate(user, updatedLinks);
 };
 
 const index = async (query, user) => {
@@ -64,17 +62,15 @@ const store = async (data, user) => {
 		const link = {
 			...data,
 			user_id: user.id,
-			position: 0,
+			position: 1,
 			active: 0,
 		};
-
-		const response = await LinkRepository.store(link);
-
-		await _reOrderLinks(user);
+		const links = await _reOrderLinks(user);
+		const response = await LinkRepository.store(link, links);
 
 		return {
 			...data,
-			id: response.insertId,
+			id: response[0].insertId,
 			user_id: user.id,
 			position: 1,
 		};
