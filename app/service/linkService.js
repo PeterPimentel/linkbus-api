@@ -85,7 +85,7 @@ const store = async (data, user) => {
 const update = async (params, data, user) => {
 	try {
 		Log.trace("Update", "LinkService");
-		console.log("dados recebidos - ", data);
+
 		_validateLink(data);
 		const result = await LinkRepository.update(user, params.id, data);
 		if (result.affectedRows === 0) {
@@ -106,6 +106,9 @@ const update = async (params, data, user) => {
 
 const remove = async (params, user) => {
 	try {
+		//TODO reorder link positions
+		//Ao remover um link, o position dos links posteiores a ele deve ser reduzido em 1
+		//EX: remover o link de poition 3 os links de position 4, 5, 6 devem ficar  3,4,5
 		Log.trace("Remove", "LinkService");
 		const result = await LinkRepository.remove(user, params.id);
 		if (result.affectedRows === 0) {
